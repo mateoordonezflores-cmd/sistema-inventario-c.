@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+
+char nombres[10][30];
+float precios[10];
+int cantidad, i;
+
+void Ingresar_productos()
+{
+
+    for ( i = 0; i < cantidad; i++)
+    {
+        printf ("\nProductos %d\n", i + 1);
+
+        printf ("Ingrese el nombre del producto: ");
+        scanf ("%29s", nombres[i]);
+
+        printf ("Ingrese el precio del producto: ");
+        scanf ("%f",&precios[i]);
+    }
+    
+
+
+}
+float Total_cal()
+{
+   
+    float total = 0;
+    
+    for ( i = 0; i < cantidad; i++)
+    {
+        total = total + precios[i];
+    }
+    return total;
+}
+
+void mayor_menor()
+{
+
+    int mayor = 0;
+    int menor = 0;
+
+    for ( i = 0; i < cantidad; i++)
+    {
+        if (precios[i] > precios[mayor] )
+        {
+            mayor = i;
+        }
+        if (precios[i] < precios[menor])
+        {
+            menor = i;
+        }
+        
+    }
+    printf ("\nProducto mas caro: %s - %.2f\n", nombres[mayor], precios[mayor]);
+    printf ("\nProducto mas barato: %s - %.2f\n", nombres[menor], precios[menor]);
+
+}
+void Promedio_calcu()
+{
+    float promedio;
+
+    promedio = Total_cal() / cantidad;
+    printf ("\nPrecio promedio: %.2f\n",promedio);
+}
+void Buscar_Producto()
+{
+    char buscar[30];
+    int encontrado = 0;
+
+    printf ("\nIngrese el producto que desea buscar: ");
+    scanf ("%29s",buscar);
+
+    for ( i = 0; i < cantidad; i++)
+    {
+        if (strcmp(buscar, nombres[i]) == 0)
+        {
+            printf("Producto encontrado: %s\n", nombres[i]);
+            printf("Precio: $%.2f\n", precios[i]);
+            encontrado = 1;
+            break;
+        }
+        
+    }
+    if (encontrado == 0 )
+    {
+        printf ("El producto no fue encontrado\n");
+
+    }
+    
+}
+int main()
+{
+    printf("=== INVENTARIO DE LA TIENDA ===\n");
+
+    do
+    {
+        printf("Ingrese la cantidad de productos: ");
+        scanf("%d", &cantidad);
+
+    } while (cantidad < 1 || cantidad > 10);
+
+    Ingresar_productos();
+
+    printf("\nPrecio total del inventario: %.2f\n", Total_cal());
+
+    mayor_menor();
+
+    Promedio_calcu();
+
+    Buscar_Producto();
+
+    return 0;
+}
